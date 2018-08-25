@@ -1,7 +1,9 @@
 # 01_startproject
 01_startproject
 
-### command; 現在のディレクトリにプロジェクトを生成
+## command
+
+### 現在のディレクトリにプロジェクトを生成
 
 `$ django-admin startproject my_very_fist_django_project .`
 
