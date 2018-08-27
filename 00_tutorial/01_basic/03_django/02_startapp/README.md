@@ -82,6 +82,8 @@ admin.site.register(Post)
 
 ## 2. djangoプロジェクトのurlについて
 
+`new file: blog/urls.py`
+
 blog app内に urls.pyを追加
 
 blog/urls.py
@@ -95,6 +97,8 @@ urlpatterns = [
 
 ```
 
+※urlパターン: ^文字の始まり、$文字の終わり、\d数字、
+
 ### djangoプロジェクト内にblog urlsを追加
 
 startapp/urls.py
@@ -107,6 +111,7 @@ urlpatterns = [
     url(r'', include('blog.urls')),
 ]
 ```
+
 
 ### blog app内にviewを追加
 
@@ -122,3 +127,28 @@ def post_list(request) :
 ※urlが示しているfunctionをviewという
 
 ※url名は: <model名>_<内容>
+
+## 3. blog app内にtemplatesを追加
+
+`new folder: blog/templates`
+
+`new folder: blog/templates/blog`
+
+`new file: blog/templates/blog/post_list.html`
+
+※上記のパスはdjangoのtemplate loadersのルールである
+
+blog/templates/blog/post_list.html
+```
+<html>
+    <head>
+        <title>blog</title>
+    </head>
+    <body>
+        <p>It works!</p>
+    </body>
+</html>
+```
+
+![](startapp/screenshots/04_it_works.png)
+
