@@ -4,9 +4,7 @@
 
 先行: 01_startproject
 
-## command
-
-### プロジェクト内にappを生成
+## 1. プロジェクト内にappを生成
 
 `$ python manager.py startapp blog`
 
@@ -81,3 +79,46 @@ admin.site.register(Post)
 ```
 
 ![](startapp/screenshots/03_register_post_model.png)
+
+## 2. djangoプロジェクトのurlについて
+
+blog app内に urls.pyを追加
+
+blog/urls.py
+```
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    url(r'^$', views.post_list, name='post_list'),
+]
+
+```
+
+### djangoプロジェクト内にblog urlsを追加
+
+startapp/urls.py
+```
+from django.conf.urls import include, url
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'', include('blog.urls')),
+]
+```
+
+### blog app内にviewを追加
+
+blog/views.py
+```
+from django.shortcuts import render
+
+
+def post_list(request) :
+    return render(request, 'blog/post_list.html')
+```
+
+※urlが示しているfunctionをviewという
+
+※url名は: <model名>_<内容>
