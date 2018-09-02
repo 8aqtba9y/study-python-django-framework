@@ -152,3 +152,98 @@ blog/templates/blog/post_list.html
 
 ![](startapp/screenshots/04_it_works.png)
 
+
+## 4. djangoの ORM, Query Sets
+
+`$ python manage.py shell`
+
+Python 3.6.4 ,IPython 6.2.1
+```
+# Post Modelを取得
+
+In [1]: from blog.models import Post
+In [2]: Post
+Out[2]: blog.models.Post
+
+In [3]: Post.objects.all()
+Out[3]: <QuerySet [<Post: title3>, <Post: title4>, <Post: title5>]>
+
+In [4]: queryset = Post.objects.all()
+In [5]: for post in queryset :
+   ...:     print(post)
+   ...: 
+title3
+title4
+title5
+
+# User Modelを取得
+
+In [6]: from django.contrib.auth.models import User
+
+In [7]: User.objects.all()
+Out[7]: <QuerySet [<User: admin>]>
+
+In [8]: me = User.objects.first()
+
+In [9]: me
+Out[9]: <User: admin>
+
+In [10]: me.username
+Out[10]: 'admin'
+
+In [11]: me.password
+Out[11]: 'pbkdf2_sha256$36000$mNBs9gpiXWEE$HLUI8tAaUDnThCW9UB5CVVGe2SeYtYcAJmf6G2rV82A='
+
+# Userを用いて、Post Modelを生成
+
+In [12]: Post.objects.create(author=me, title='title6', text='text6')
+Out[12]: <Post: title6>
+
+In [13]: Post.objects.all()
+Out[13]: <QuerySet [<Post: title3>, <Post: title4>, <Post: title5>, <Post: title6>]>
+
+In [14]: Post.objects.filter(author=me)
+Out[14]: <QuerySet [<Post: title3>, <Post: title4>, <Post: title5>, <Post: title6>]>
+
+In [15]: Post.objects.filter(title__contains='title')
+Out[15]: <QuerySet [<Post: title3>, <Post: title4>, <Post: title5>, <Post: title6>]>
+
+# timezoneを取得
+
+In [16]: from django.utils import timezone
+
+In [17]: timezone.now()
+Out[17]: datetime.datetime(2018, 9, 2, 3, 37, 54, 926765, tzinfo=<UTC>)
+
+# 発行日で絞る
+
+In [18]: Post.objects.filter(published_date__lte=timezone.now())
+Out[18]: <QuerySet []>
+
+In [19]: post = Post.objects.get(title='title6')
+
+In [20]: post
+Out[20]: <Post: title6>
+
+In [21]: post.publish()
+
+In [22]: post.published_date
+Out[22]: datetime.datetime(2018, 9, 2, 3, 48, 16, 113736, tzinfo=<UTC>)
+
+In [23]: Post.objects.filter(published_date__lte=timezone.now())
+Out[23]: <QuerySet [<Post: title6>]>
+
+# 生成日で並び替え
+
+In [24]: Post.objects.order_by('created_date')
+Out[24]: <QuerySet [<Post: title3>, <Post: title4>, <Post: title5>, <Post: title6>]>
+
+In [25]: Post.objects.order_by('-created_date')
+Out[25]: <QuerySet [<Post: title6>, <Post: title5>, <Post: title4>, <Post: title3>]>
+
+# 取得及び、並び替え
+
+In [26]: Post.objects.filter(created_date__lte=timezone.now()).order_by('-publis
+    ...: hed_date')
+Out[26]: <QuerySet [<Post: title6>, <Post: title3>, <Post: title4>, <Post: title5>]>
+```
