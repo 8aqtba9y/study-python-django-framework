@@ -12,3 +12,20 @@
 `$ python manage.py makemigrations <appname>`
 
 `$ python manage.py migrate <appname>`
+
+### VSコードの初期設定
+
+`$ pip install pylint-django`
+
+`「Command」＋「,」`
+
+USER SETTINGS
+```
+{
+    …,
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_django"
+    ]
+}
+```

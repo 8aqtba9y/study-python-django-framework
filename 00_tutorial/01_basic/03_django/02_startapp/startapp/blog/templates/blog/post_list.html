@@ -3,6 +3,19 @@
         <title>blog</title>
     </head>
     <body>
-        <p>It works!</p>
+        <div>
+            <h1><a href="/">It works!</a></h1>
+        </div>
+
+        <hr/>
+
+        {% for post in post_list %}
+            <div>
+                <p>published: {{ post.published_date }}</p>
+                <h2><a href="">{{ post.title }}</a></h2>
+                <p>{{ post.text|linebreaks }}</p>
+            </div>
+        {% endfor %}
+
     </body>
 </html>

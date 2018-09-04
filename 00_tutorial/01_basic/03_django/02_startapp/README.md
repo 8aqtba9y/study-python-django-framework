@@ -246,4 +246,52 @@ Out[25]: <QuerySet [<Post: title6>, <Post: title5>, <Post: title4>, <Post: title
 In [26]: Post.objects.filter(created_date__lte=timezone.now()).order_by('-publis
     ...: hed_date')
 Out[26]: <QuerySet [<Post: title6>, <Post: title3>, <Post: title4>, <Post: title5>]>
+
+# shellの終了
+In [27]: exit()
 ```
+
+## 5. djangoの 動的データ, Query Sets
+
+views.py
+```
+from django.shortcuts import render
+from .models import Post
+from django.utils import timezone
+
+def post_list(request):
+    qs = Post.objects.all()
+    qs.filter(published_date__lte=timezone.now())
+    qs.order_by('published_date')
+    return render(request, 'blog/post_list.html', {
+        'post_list':qs
+    })
+```
+
+post_list.html
+```
+<html>
+    <head>
+        <title>blog</title>
+    </head>
+    <body>
+        <div>
+            <h1><a href="/">It works!</a></h1>
+        </div>
+
+        <hr/>
+
+        {% for post in post_list %}
+            <div>
+                <p>published: {{ post.published_date }}</p>
+                <h2><a href="">{{ post.title }}</a></h2>
+                <p>{{ post.text|linebreaks }}</p>
+            </div>
+        {% endfor %}
+
+    </body>
+</html>
+```
+
+![](startapp/screenshots/05_Query_Sets.png)
+
