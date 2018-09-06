@@ -1,0 +1,43 @@
+<!-- 静的ファイルの確認 -->
+{% load staticfiles %}
+
+<html>
+    <head>
+        <title>blog</title>
+        <!-- bootstrapの読み込み -->
+        <!-- https://getbootstrap.com/docs/4.1/getting-started/introduction/#quick-start -->
+        <link 
+            rel="stylesheet" 
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+            ntegrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
+            crossorigin="anonymous">
+
+        <!-- font familyの追加 -->
+        <!-- https://fonts.google.com/selection?selection.family=Lobster -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
+
+        <!-- 静的ファイルの読み込み -->
+        <!-- /static/blog/blog.css -->
+        <link rel="stylesheet" href="{% static "blog/blog.css" %}">
+    </head>
+
+    <body>
+        <div class="page-header">
+            <h1><a href="/">It works!</a></h1>
+        </div>
+
+        <hr/>
+
+        <div class="content container">
+            <div class="row">
+                <div class="col-md-8">
+
+                    {% block content %} <!-- content領域を指定（block） --> 
+                    {% endblock %}
+
+                </div>
+            </div>
+        </div>
+    </body>
+    
+</html>

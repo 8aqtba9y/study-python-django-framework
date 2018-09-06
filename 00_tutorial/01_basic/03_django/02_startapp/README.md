@@ -295,3 +295,7 @@ post_list.html
 
 ![](startapp/screenshots/05_Query_Sets.png)
 
+## 6. CSS
+
+> [CSS.md](./CSS.md)
+
