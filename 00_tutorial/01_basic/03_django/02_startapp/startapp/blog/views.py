@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from .models import Post
 from django.utils import timezone
+from .forms import PostForm
 
 def post_list(request):
     qs = Post.objects.all()
@@ -27,3 +28,6 @@ def post_detail(request, pk):
     return render(request, 'blog/post_detail.html', {
         'post':post
     })
+
+def post_new(request):
+    pass
