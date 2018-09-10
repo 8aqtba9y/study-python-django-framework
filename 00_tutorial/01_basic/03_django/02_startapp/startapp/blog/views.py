@@ -30,4 +30,7 @@ def post_detail(request, pk):
     })
 
 def post_new(request):
-    pass
+    form = PostForm()
+    return render(request, 'blog/post_forms_edit.html', {
+        'form':form
+    })
