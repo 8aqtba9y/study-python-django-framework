@@ -134,3 +134,36 @@ blog/templates/blog/base.html
 |:-:|:-:|
 |![](startapp/screenshots/16_add_plus_icon.png)|![](startapp/screenshots/17_forms_edit.png)|
  
+
+##### save処理を追加
+
+blog/views.py
+```
+from django.shortcuts import get_object_or_404, redirect, render
+from .models import Post
+from django.utils import timezone
+from .forms import PostForm
+
+...
+
+def post_new(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('post_detail', post.pk)
+
+    else:
+        form = PostForm()
+    return render(request, 'blog/post_forms_edit.html', {
+        'form':form
+    })
+```
+
+|/post/new|/post/it/|
+|:-:|:-:|
+|![](startapp/screenshots/18_new_post.png)|![](startapp/screenshots/19_post_it_works.png)|
+ 

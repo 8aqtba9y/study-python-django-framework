@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from .models import Post
 from django.utils import timezone
 from .forms import PostForm
@@ -30,7 +30,17 @@ def post_detail(request, pk):
     })
 
 def post_new(request):
-    form = PostForm()
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('post_detail', post.pk)
+
+    else:
+        form = PostForm()
     return render(request, 'blog/post_forms_edit.html', {
         'form':form
     })
