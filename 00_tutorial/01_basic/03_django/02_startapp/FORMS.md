@@ -163,7 +163,7 @@ def post_new(request):
     })
 ```
 
-|/post/new|/post/it/|
+|/post/new|/post/pk/|
 |:-:|:-:|
 |![](startapp/screenshots/18_new_post.png)|![](startapp/screenshots/19_post_it_works.png)|
  
